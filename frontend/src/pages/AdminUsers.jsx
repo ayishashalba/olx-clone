@@ -41,24 +41,6 @@ function AdminUsers() {
     }
   };
 
-  const deleteUser = async (id) => {
-    try {
-      const res = await axios.delete(
-        `http://localhost:5000/api/auth/users/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      toast.success(res.data.message);
-      fetchUsers();
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Delete failed");
-    }
-  };
-
   useEffect(() => {
     if (user && user.role === "admin") {
       fetchUsers();
@@ -98,13 +80,6 @@ function AdminUsers() {
                   <>
                     <button onClick={() => toggleBlockUser(singleUser._id)}>
                       {singleUser.isBlocked ? "Unblock" : "Block"}
-                    </button>
-
-                    <button
-                      onClick={() => deleteUser(singleUser._id)}
-                      className="delete-user-btn"
-                    >
-                      Delete
                     </button>
                   </>
                 )}

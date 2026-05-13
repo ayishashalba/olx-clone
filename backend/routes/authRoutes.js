@@ -6,7 +6,6 @@ const User = require("../models/User");
 const protect = require("../middleware/authMiddleware");
 const adminOnly = require("../middleware/adminMiddleware");
 const sendEmail = require("../utils/sendEmail");
-const Product = require("../models/Product");
 
 const router = express.Router();
 
@@ -210,37 +209,6 @@ router.put("/forgot-password", async (req, res) => {
 
     res.json({
       message: "Password changed successfully",
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-});
-
-// Admin: Delete User
-router.delete("/users/:id", protect, adminOnly, async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
-    }
-
-    if (user.role === "admin") {
-      return res.status(400).json({
-        message: "Admin user cannot be deleted",
-      });
-    }
-
-    await Product.deleteMany({ seller: user._id });
-
-    await user.deleteOne();
-
-    res.json({
-      message: "User and their listings deleted successfully",
     });
   } catch (error) {
     res.status(500).json({
