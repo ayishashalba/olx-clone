@@ -11,7 +11,7 @@ function MyListings() {
   const fetchMyListings = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/products/my/listings",
+        "https://olx-clone-zg79.onrender.com/api/products/my/listings",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -28,7 +28,7 @@ function MyListings() {
   const toggleStatus = async (id) => {
     try {
       await axios.patch(
-        `http://localhost:5000/api/products/${id}/status`,
+        `https://olx-clone-zg79.onrender.com/api/products/${id}/status`,
         {},
         {
           headers: {
@@ -45,7 +45,7 @@ function MyListings() {
 
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`, {
+      await axios.delete(`https://olx-clone-zg79.onrender.com/api/products/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,7 +73,7 @@ function MyListings() {
             <div className="listing-image-wrapper">
               <img
                 className={product.status === "sold" ? "sold-image" : ""}
-                src={`http://localhost:5000/uploads/${product.image}`}
+                src={`https://olx-clone-zg79.onrender.com/uploads/${product.image}`}
                 alt={product.title}
               />
 

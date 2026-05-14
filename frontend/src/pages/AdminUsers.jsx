@@ -10,7 +10,7 @@ function AdminUsers() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/users", {
+      const res = await axios.get("https://olx-clone-zg79.onrender.com/api/auth/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,7 +25,7 @@ function AdminUsers() {
   const toggleBlockUser = async (id) => {
     try {
       const res = await axios.patch(
-        `http://localhost:5000/api/auth/users/${id}/block`,
+        `https://olx-clone-zg79.onrender.com/api/auth/users/${id}/block`,
         {},
         {
           headers: {

@@ -12,7 +12,7 @@ function Admin() {
   const fetchAdminProducts = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/products/admin/listings",
+        "https://olx-clone-zg79.onrender.com/api/products/admin/listings",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -28,7 +28,7 @@ function Admin() {
 
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`, {
+      await axios.delete(`https://olx-clone-zg79.onrender.com/api/products/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -64,7 +64,7 @@ function Admin() {
         {products.map((product) => (
           <div className="admin-item" key={product._id}>
             <img
-              src={`http://localhost:5000/uploads/${product.image}`}
+              src={`https://olx-clone-zg79.onrender.com/uploads/${product.image}`}
               alt={product.title}
             />
 

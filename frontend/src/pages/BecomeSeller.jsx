@@ -11,7 +11,7 @@ function BecomeSeller() {
   const handleBecomeSeller = async () => {
     try {
       const res = await axios.patch(
-        "http://localhost:5000/api/auth/become-seller",
+        "https://olx-clone-zg79.onrender.com/api/auth/become-seller",
         {},
         {
           headers: {

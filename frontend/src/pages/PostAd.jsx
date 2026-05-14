@@ -42,7 +42,7 @@ if (!user || (user.role !== "seller" && user.role !== "admin")) {
     formData.append("image", image);
 
     try {
-      await axios.post("http://localhost:5000/api/products", formData, {
+      await axios.post("https://olx-clone-zg79.onrender.com/api/products", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

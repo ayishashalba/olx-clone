@@ -27,7 +27,7 @@ function Home() {
   const apiCategory = category === "Others" ? "" : category;
 
   const res = await axios.get(
-    `http://localhost:5000/api/products?category=${apiCategory}&search=${searchQuery}&sort=${selectedSort}`
+    `https://olx-clone-zg79.onrender.com/api/products?category=${apiCategory}&search=${searchQuery}&sort=${selectedSort}`
   );
 
   let data = res.data;
@@ -124,7 +124,7 @@ function Home() {
             <div className="home-image-wrapper">
   <img
     className={product.status === "sold" ? "sold-image" : ""}
-    src={`http://localhost:5000/uploads/${product.image}`}
+    src={`https://olx-clone-zg79.onrender.com/uploads/${product.image}`}
     alt={product.title}
   />
 

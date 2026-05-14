@@ -23,7 +23,7 @@ function ForgotPassword() {
 
     try {
       const res = await axios.put(
-        "http://localhost:5000/api/auth/forgot-password",
+        "https://olx-clone-zg79.onrender.com/api/auth/forgot-password",
         form
       );
 

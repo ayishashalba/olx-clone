@@ -17,7 +17,7 @@ const [image, setImage] = useState(null);
   });
 
   const fetchProduct = async () => {
-    const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+    const res = await axios.get(`https://olx-clone-zg79.onrender.com/api/products/${id}`);
     setForm({
       title: res.data.title,
       description: res.data.description,
@@ -56,7 +56,7 @@ const [image, setImage] = useState(null);
     }
 
     await axios.put(
-      `http://localhost:5000/api/products/${id}`,
+      `https://olx-clone-zg79.onrender.com/api/products/${id}`,
       formData,
       {
         headers: {

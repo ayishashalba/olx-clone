@@ -9,7 +9,7 @@ function ProductDetails() {
 
   const fetchProduct = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+      const res = await axios.get(`https://olx-clone-zg79.onrender.com/api/products/${id}`);
       setProduct(res.data);
     } catch (error) {
       console.log(error);
@@ -28,7 +28,7 @@ function ProductDetails() {
     <div className="details-page">
       <div className="details-card">
         <img
-          src={`http://localhost:5000/uploads/${product.image}`}
+          src={`https://olx-clone-zg79.onrender.com/uploads/${product.image}`}
           alt={product.title}
         />
 

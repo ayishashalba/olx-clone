@@ -27,7 +27,7 @@ function VerifyOtp() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/verify-otp",
+        "https://olx-clone-zg79.onrender.com/api/auth/verify-otp",
         {
           email,
           otp,
@@ -47,7 +47,7 @@ function VerifyOtp() {
 
   const resendOtp = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/resend-otp", {
+      await axios.post("https://olx-clone-zg79.onrender.com/api/auth/resend-otp", {
         email,
       });
 
