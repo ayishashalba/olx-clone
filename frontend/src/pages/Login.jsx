@@ -29,6 +29,10 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       toast.success("Login successful");
+      setForm({
+  email: "",
+  password: "",
+});
       navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
@@ -39,19 +43,24 @@ function Login() {
     <div className="form-container">
       <h1>Login</h1>
 
-      <form onSubmit={handleLogin} className="auth-form">
+      <form onSubmit={handleLogin} className="auth-form" autoComplete="off">
         <input
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
+  name="email"
+  type="text"
+  placeholder="Email"
+  value={form.email}
+  onChange={handleChange}
+  autoComplete="new-email"
+/>
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
+<input
+  name="password"
+  type="password"
+  placeholder="Password"
+  value={form.password}
+  onChange={handleChange}
+  autoComplete="new-password"
+/>
 
         <Link to="/forgot-password" className="forgot-link">
   Forgot Password?

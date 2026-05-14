@@ -1,47 +1,90 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Home() {
-  
   const [products, setProducts] = useState([]);
-  const location = useLocation();
+  const [sort, setSort] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [wishlist, setWishlist] = useState([]);
 
-const searchQuery = new URLSearchParams(location.search).get("search") || "";
+  const location = useLocation();
+  const searchQuery = new URLSearchParams(location.search).get("search") || "";
 
   const categories = [
     { name: "Cars", icon: "🚗" },
     { name: "Properties", icon: "🏢" },
     { name: "Mobiles", icon: "📱" },
     { name: "Furniture", icon: "🛋️" },
-    { name: "Clothes", icon: "👕" }
+    { name: "Clothes", icon: "👕" },
+    { name: "Others", icon: "📦" }
   ];
 
-  const fetchProducts = async (selectedCategory = "") => {
+ const fetchProducts = async (
+  category = selectedCategory,
+  selectedSort = sort
+) => {
+  const apiCategory = category === "Others" ? "" : category;
+
   const res = await axios.get(
-    `http://localhost:5000/api/products?category=${selectedCategory}&search=${searchQuery}`
+    `http://localhost:5000/api/products?category=${apiCategory}&search=${searchQuery}&sort=${selectedSort}`
   );
 
-  setProducts(res.data);
+  let data = res.data;
+
+  if (category === "Others") {
+    const mainCategories = [
+      "Cars",
+      "Properties",
+      "Mobiles",
+      "Furniture",
+      "Clothes",
+    ];
+
+    data = data.filter(
+      (product) => !mainCategories.includes(product.category)
+    );
+  }
+
+  setProducts(data);
 };
 
+  const toggleWishlist = (e, productId) => {
+    e.preventDefault();
+
+    if (wishlist.includes(productId)) {
+      setWishlist(wishlist.filter((id) => id !== productId));
+    } else {
+      setWishlist([...wishlist, productId]);
+    }
+  };
+
   useEffect(() => {
-  fetchProducts();
-}, [searchQuery]);
+    fetchProducts();
+  }, [searchQuery]);
 
   return (
     <div className="home-page">
       <div className="category-grid">
-        <button className="all-btn" onClick={() => fetchProducts()}>
-  All Categories
-</button>
+        <button
+          className="all-btn"
+          onClick={() => {
+            setSelectedCategory("");
+            fetchProducts("", sort);
+          }}
+        >
+          All Categories
+        </button>
+
         {categories.map((cat) => (
           <div
-  className="category-card"
-  key={cat.name}
-  onClick={() => fetchProducts(cat.name)}
->
+            className="category-card"
+            key={cat.name}
+            onClick={() => {
+              setSelectedCategory(cat.name);
+              fetchProducts(cat.name, sort);
+            }}
+          >
             <div className="category-icon">{cat.icon}</div>
             <p>{cat.name}</p>
           </div>
@@ -50,6 +93,20 @@ const searchQuery = new URLSearchParams(location.search).get("search") || "";
 
       <h1 className="fresh-title">Fresh recommendations</h1>
 
+      <div className="filters">
+        <select
+          value={sort}
+          onChange={(e) => {
+            setSort(e.target.value);
+            fetchProducts(selectedCategory, e.target.value);
+          }}
+        >
+          <option value="">Newest</option>
+          <option value="high">Price: High to Low</option>
+          <option value="low">Price: Low to High</option>
+        </select>
+      </div>
+
       <div className="product-grid">
         {products.map((product) => (
           <Link
@@ -57,12 +114,24 @@ const searchQuery = new URLSearchParams(location.search).get("search") || "";
             className="product-card"
             key={product._id}
           >
-            <div className="heart">♡</div>
+            <div
+              className="heart"
+              onClick={(e) => toggleWishlist(e, product._id)}
+            >
+              {wishlist.includes(product._id) ? "♥" : "♡"}
+            </div>
 
-            <img
-              src={`http://localhost:5000/uploads/${product.image}`}
-              alt={product.title}
-            />
+            <div className="home-image-wrapper">
+  <img
+    className={product.status === "sold" ? "sold-image" : ""}
+    src={`http://localhost:5000/uploads/${product.image}`}
+    alt={product.title}
+  />
+
+  {product.status === "sold" && (
+    <div className="sold-badge">SOLD</div>
+  )}
+</div>
 
             <h3>₹ {product.price}</h3>
             <p>{product.title}</p>

@@ -70,10 +70,16 @@ function Navbar() {
             Logout
           </button>
 
-          {(user.role === "seller" || user.role === "admin") && (
-            <Link to="/post-ad" className="sell-btn">
-              + SELL
-            </Link>
+          {user.role === "buyer" && (
+  <Link to="/become-seller" className="sell-btn">
+    + SELL
+  </Link>
+)}
+
+{(user.role === "seller" || user.role === "admin") && (
+  <Link to="/post-ad" className="sell-btn">
+    + SELL
+  </Link>
           )}
         </>
       )}
