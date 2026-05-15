@@ -21,37 +21,29 @@ function Register() {
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      await axios.post(
-        "https://olx-clone-zg79.onrender.com/api/auth/register",
-        form
-      );
+  try {
+    await axios.post(
+      "https://olx-clone-zg79.onrender.com/api/auth/register",
+      form
+    );
 
-      toast.success("OTP sent to email");
+    toast.success("OTP sent to email");
 
-      setForm({
-        name: "",
-        email: "",
-        password: "",
-        role: "buyer",
-      });
-
-      navigate("/verify-otp", {
-        state: {
-          email: form.email,
-        },
-      });
-
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-        error.message ||
-        "Register failed"
-      );
-    }
-  };
+    navigate("/verify-otp", {
+      state: {
+        email: form.email,
+      },
+    });
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message ||
+      error.message ||
+      "Register failed"
+    );
+  }
+};
 
   return (
     <div className="form-container">

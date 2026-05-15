@@ -35,12 +35,15 @@ router.post("/register", async (req, res) => {
       otpExpires: Date.now() + 5 * 60 * 1000,
     });
 
-    await sendEmail(email, otp);
+    try {
+  await sendEmail(email, otp);
+} catch (error) {
+  console.log("Email failed");
+}
 
-    res.status(201).json({
-      message: "OTP sent to email",
-      email,
-    });
+res.status(201).json({
+  message: "OTP created",
+});
   } catch (error) {
     res.status(500).json({
       message: error.message,
