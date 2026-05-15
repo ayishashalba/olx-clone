@@ -41,7 +41,7 @@ function App() {
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/verify-otp" element={<verifyOtp />} />
 
         <Route path="/become-seller" element={<BecomeSeller />} />
       </Routes>
