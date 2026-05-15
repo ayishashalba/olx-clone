@@ -12,7 +12,7 @@ import MyListings from "./pages/MyListings";
 import EditProduct from "./pages/EditProduct";
 import AdminUsers from "./pages/AdminUsers";
 import ForgotPassword from "./pages/ForgotPassword";
-import VerifyOtp from "./pages/";
+import VerifyOtp from "./pages/VerifyOtp";
 import BecomeSeller from "./pages/BecomeSeller";
 
 function App() {
