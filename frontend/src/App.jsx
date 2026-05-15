@@ -12,7 +12,7 @@ import MyListings from "./pages/MyListings";
 import EditProduct from "./pages/EditProduct";
 import AdminUsers from "./pages/AdminUsers";
 import ForgotPassword from "./pages/ForgotPassword";
-import VerifyOtp from "./pages/VerifyOtp";
+import VerifyOtp from "./pages/";
 import BecomeSeller from "./pages/BecomeSeller";
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route path="/verify-otp" element={<VerifyOtp />} />
-        
+
         <Route path="/become-seller" element={<BecomeSeller />} />
       </Routes>
     </>
