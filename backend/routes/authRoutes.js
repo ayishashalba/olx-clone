@@ -27,13 +27,14 @@ router.post("/register", async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     const user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-      role,
-      otp,
-      otpExpires: Date.now() + 5 * 60 * 1000,
-    });
+  name,
+  email,
+  password: hashedPassword,
+  role,
+  otp,
+  otpExpires: Date.now() + 5 * 60 * 1000,
+  isVerified: true,
+});
 
     try {
   await sendEmail(email, otp);
@@ -115,12 +116,6 @@ router.post("/login", async (req, res) => {
     if (user.isBlocked) {
   return res.status(403).json({
     message: "Your account has been blocked by admin",
-  });
-}
-
-if (!user.isVerified) {
-  return res.status(400).json({
-    message: "Please verify your email first",
   });
 }
 
