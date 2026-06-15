@@ -182,3 +182,13 @@
     border-right-color: var(--border);
   }
 }
+
+.upload-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #002f34;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}

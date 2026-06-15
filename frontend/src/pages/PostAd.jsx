@@ -74,6 +74,10 @@ const [preview, setPreview] = useState("");
 
         <input name="location" placeholder="Location" onChange={handleChange} />
 
+<label>
+  Product Image
+</label>
+
 {preview && (
   <img
     src={preview}
@@ -101,11 +105,12 @@ const [preview, setPreview] = useState("");
     }
   }}
 />
-
 <label htmlFor="imageUpload" className="upload-btn">
   Choose File
 </label>
 
+<br/>
+<br/>
 <button type="submit">Post Ad</button>
       </form>
     </div>
