@@ -20,7 +20,10 @@ app.get("/", (req, res) => {
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
+  .then(() => {
+    console.log("MongoDB Connected");
+    console.log("Database:", mongoose.connection.name);
+  })
   .catch((err) => console.log(err));
 
 const PORT = process.env.PORT || 5000;

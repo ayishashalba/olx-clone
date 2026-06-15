@@ -24,11 +24,12 @@ function Register() {
   e.preventDefault();
 
   try {
-    await axios.post(
-      "https://olx-clone-zg79.onrender.com/api/auth/register",
-      form
-    );
+    const res = await axios.post(
+    "http://localhost:5000/api/auth/register",
+    form
+  );
 
+  console.log("REGISTER RESPONSE:", res.data);
     toast.success("OTP sent to email");
 
     navigate("/verify-otp", {
