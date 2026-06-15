@@ -74,10 +74,6 @@ const [preview, setPreview] = useState("");
 
         <input name="location" placeholder="Location" onChange={handleChange} />
 
-<label>
-  Product Image
-</label>
-
 {preview && (
   <img
     src={preview}
