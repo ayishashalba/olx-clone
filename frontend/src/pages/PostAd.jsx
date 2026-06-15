@@ -129,9 +129,9 @@ function PostAd() {
           onChange={handleImageChange}
         />
 
-        <label htmlFor="file" className="upload-box">
-  📷 Choose File
-</label>
+        <label htmlFor="imageUpload" className="upload-btn">
+          Choose File
+        </label>
 
         <br />
         <br />
