@@ -8,6 +8,8 @@ function EditProduct() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 const [image, setImage] = useState(null);
+const [currentImage, setCurrentImage] = useState("");
+const [preview, setPreview] = useState("");
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -17,15 +19,20 @@ const [image, setImage] = useState(null);
   });
 
   const fetchProduct = async () => {
-    const res = await axios.get(`https://olx-clone-zg79.onrender.com/api/products/${id}`);
-    setForm({
-      title: res.data.title,
-      description: res.data.description,
-      price: res.data.price,
-      category: res.data.category,
-      location: res.data.location,
-    });
-  };
+  const res = await axios.get(
+    `https://olx-clone-zg79.onrender.com/api/products/${id}`
+  );
+
+  setForm({
+    title: res.data.title,
+    description: res.data.description,
+    price: res.data.price,
+    category: res.data.category,
+    location: res.data.location,
+  });
+
+  setCurrentImage(res.data.image);
+};
 
   useEffect(() => {
     fetchProduct();
@@ -92,14 +99,51 @@ const [image, setImage] = useState(null);
         <input name="category" value={form.category} onChange={handleChange} />
 
         <input name="location" value={form.location} onChange={handleChange} />
-        <label>Change Product Image</label>
+
+{currentImage && (
+  <div>
+    <p>Current Image</p>
+
+    <img
+      src={`https://olx-clone-zg79.onrender.com/uploads/${currentImage}`}
+      alt="product"
+      style={{
+        width: "200px",
+        height: "200px",
+        objectFit: "cover",
+        borderRadius: "8px",
+      }}
+    />
+  </div>
+)}
+
+<label>Change Product Image</label>
 
 <input
   type="file"
-  onChange={(e) => setImage(e.target.files[0])}
+  onChange={(e) => {
+    setImage(e.target.files[0]);
+    setPreview(URL.createObjectURL(e.target.files[0]));
+  }}
 />
+{preview && (
+  <div>
+    <p>New Image Preview</p>
 
-        <button type="submit">Update Product</button>
+    <img
+      src={preview}
+      alt="preview"
+      style={{
+        width: "200px",
+        height: "200px",
+        objectFit: "cover",
+        borderRadius: "8px",
+      }}
+    />
+  </div>
+)}
+
+<button type="submit">Update Product</button>
       </form>
     </div>
   );
