@@ -183,12 +183,24 @@
   }
 }
 
-.upload-btn {
+.upload-box {
   display: inline-block;
-  padding: 10px 20px;
-  background: #002f34;
-  color: white;
-  border-radius: 4px;
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 10px;
+
+  background: #ffffff;
+  color: #002f34;
+
+  border: 2px solid #002f34;
+  border-radius: 6px;
+
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+
   cursor: pointer;
-  margin-bottom: 15px;
+  transition: all 0.2s ease-in-out;
+
+  user-select: none;
 }
