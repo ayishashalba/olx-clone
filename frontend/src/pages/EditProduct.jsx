@@ -100,19 +100,7 @@ const [currentImage, setCurrentImage] = useState("");
         <input name="category" value={form.category} onChange={handleChange} />
 
         <input name="location" value={form.location} onChange={handleChange} />
-{preview && (
-  <img
-    src={preview}
-    alt="preview"
-    style={{
-      width: "200px",
-      height: "200px",
-      objectFit: "cover",
-      borderRadius: "8px",
-      marginBottom: "10px",
-    }}
-  />
-)}
+
 <label>Product Image</label>
 
 {currentImage && (
@@ -144,7 +132,7 @@ const [currentImage, setCurrentImage] = useState("");
   </button>
 </label>
 
-<button type="submit">Update Products</button>
+<button type="submit">Update Product</button>
       </form>
     </div>
   );

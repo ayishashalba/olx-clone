@@ -74,13 +74,26 @@ const [preview, setPreview] = useState("");
 
         <input name="location" placeholder="Location" onChange={handleChange} />
 
-        <input
+{preview && (
+  <img
+    src={preview}
+    alt="preview"
+    style={{
+      width: "200px",
+      height: "200px",
+      objectFit: "cover",
+      borderRadius: "8px",
+      marginBottom: "10px",
+    }}
+  />
+)}
+
+<input
   id="imageUpload"
   type="file"
   style={{ display: "none" }}
   onChange={(e) => {
     const file = e.target.files[0];
-
     setImage(file);
 
     if (file) {
@@ -89,7 +102,11 @@ const [preview, setPreview] = useState("");
   }}
 />
 
-        <button type="submit">Post Ad</button>
+<label htmlFor="imageUpload" className="upload-btn">
+  Choose File
+</label>
+
+<button type="submit">Post Ad</button>
       </form>
     </div>
   );
