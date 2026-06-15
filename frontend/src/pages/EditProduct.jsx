@@ -130,7 +130,7 @@ const [currentImage, setCurrentImage] = useState("");
   Choose File
 </label>
 
-<button type="submit">Update Product</button>
+<button type="submit">Update Products</button>
       </form>
     </div>
   );
