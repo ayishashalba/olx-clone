@@ -9,7 +9,6 @@ function EditProduct() {
   const token = localStorage.getItem("token");
 const [image, setImage] = useState(null);
 const [currentImage, setCurrentImage] = useState("");
-const [preview, setPreview] = useState("");
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -22,6 +21,8 @@ const [preview, setPreview] = useState("");
   const res = await axios.get(
     `https://olx-clone-zg79.onrender.com/api/products/${id}`
   );
+
+  console.log("PRODUCT DATA:", res.data);
 
   setForm({
     title: res.data.title,
@@ -100,48 +101,35 @@ const [preview, setPreview] = useState("");
 
         <input name="location" value={form.location} onChange={handleChange} />
 
+<label>Product Image</label>
+
 {currentImage && (
-  <div>
-    <p>Current Image</p>
-
-    <img
-      src={`https://olx-clone-zg79.onrender.com/uploads/${currentImage}`}
-      alt="product"
-      style={{
-        width: "200px",
-        height: "200px",
-        objectFit: "cover",
-        borderRadius: "8px",
-      }}
-    />
-  </div>
+  <img
+    src={
+      image
+        ? URL.createObjectURL(image)
+        : `https://olx-clone-zg79.onrender.com/uploads/${currentImage}`
+    }
+    alt="product"
+    style={{
+      width: "200px",
+      height: "200px",
+      objectFit: "cover",
+      borderRadius: "8px",
+    }}
+  />
 )}
-
-<label>Change Product Image</label>
-
 <input
+  id="imageUpload"
   type="file"
-  onChange={(e) => {
-    setImage(e.target.files[0]);
-    setPreview(URL.createObjectURL(e.target.files[0]));
-  }}
+  style={{ display: "none" }}
+  onChange={(e) => setImage(e.target.files[0])}
 />
-{preview && (
-  <div>
-    <p>New Image Preview</p>
 
-    <img
-      src={preview}
-      alt="preview"
-      style={{
-        width: "200px",
-        height: "200px",
-        objectFit: "cover",
-        borderRadius: "8px",
-      }}
-    />
-  </div>
-)}
+<label htmlFor="imageUpload" className="upload-btn">
+  Choose File
+</label>
+
 
 <button type="submit">Update Product</button>
       </form>
