@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "./PostAd.css";
 
 function PostAd() {
   const navigate = useNavigate();
@@ -22,6 +21,7 @@ function PostAd() {
   const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // ✅ AUTH CHECK PROPER WAY
   useEffect(() => {
     if (!user || (user.role !== "seller" && user.role !== "admin")) {
       toast.error("Access denied");
@@ -38,7 +38,9 @@ function PostAd() {
 
     if (file) {
       setImage(file);
-      setPreview(URL.createObjectURL(file));
+
+      const url = URL.createObjectURL(file);
+      setPreview(url);
     }
   };
 
@@ -53,9 +55,11 @@ function PostAd() {
     setLoading(true);
 
     const formData = new FormData();
-    Object.keys(form).forEach((key) =>
-      formData.append(key, form[key])
-    );
+    formData.append("title", form.title);
+    formData.append("description", form.description);
+    formData.append("price", form.price);
+    formData.append("category", form.category);
+    formData.append("location", form.location);
     formData.append("image", image);
 
     try {
@@ -79,6 +83,7 @@ function PostAd() {
     }
   };
 
+  // ✅ cleanup preview memory
   useEffect(() => {
     return () => {
       if (preview) URL.revokeObjectURL(preview);
@@ -86,86 +91,55 @@ function PostAd() {
   }, [preview]);
 
   return (
-    <div className="post-page">
+    <div className="form-container">
+      <h1>Post Ad</h1>
 
-      <div className="post-container">
+      <form onSubmit={handlePostAd} className="auth-form">
 
-        {/* LEFT SIDE */}
-        <div className="post-left">
-          <h2 className="heading">POST YOUR AD</h2>
+        <input name="title" placeholder="Product title" onChange={handleChange} />
 
-          <input
-            name="title"
-            placeholder="Product Title"
-            onChange={handleChange}
-            className="input"
+        <textarea name="description" placeholder="Description" onChange={handleChange} />
+
+        <input name="price" placeholder="Price" onChange={handleChange} />
+
+        <input name="category" placeholder="Category" onChange={handleChange} />
+
+        <input name="location" placeholder="Location" onChange={handleChange} />
+
+        {/* IMAGE PREVIEW */}
+        {preview && (
+          <img
+            src={preview}
+            alt="preview"
+            style={{
+              width: "200px",
+              height: "200px",
+              objectFit: "cover",
+              borderRadius: "8px",
+              marginBottom: "10px",
+            }}
           />
+        )}
 
-          <textarea
-            name="description"
-            placeholder="Description"
-            onChange={handleChange}
-            className="textarea"
-          />
+        {/* FILE INPUT */}
+        <input
+  type="file"
+  id="imageUpload"
+  hidden
+  onChange={handleImageChange}
+/>
 
-          <div className="row">
-            <input
-              name="price"
-              placeholder="Price"
-              onChange={handleChange}
-              className="input"
-            />
+<label htmlFor="imageUpload" className="choose-file-btn">
+  Choose File
+</label>
 
-            <input
-              name="category"
-              placeholder="Category"
-              onChange={handleChange}
-              className="input"
-            />
-          </div>
+        <br />
+        <br />
 
-          <input
-            name="location"
-            placeholder="Location"
-            onChange={handleChange}
-            className="input"
-          />
-
-          {/* UPLOAD */}
-          <input
-            type="file"
-            id="imageUpload"
-            hidden
-            onChange={handleImageChange}
-          />
-
-          <label htmlFor="imageUpload" className="upload-btn">
-            Choose File
-          </label>
-
-          <button
-            onClick={handlePostAd}
-            disabled={loading}
-            className="post-btn"
-          >
-            {loading ? "Posting..." : "POST AD"}
-          </button>
-        </div>
-
-        {/* RIGHT SIDE */}
-        <div className="post-right">
-          <h3 className="preview-heading">Preview</h3>
-
-          {preview ? (
-            <img src={preview} alt="preview" className="preview-img" />
-          ) : (
-            <div className="no-preview">
-              No image selected
-            </div>
-          )}
-        </div>
-
-      </div>
+        <button type="submit" disabled={loading}>
+          {loading ? "Posting..." : "Post Ad"}
+        </button>
+      </form>
     </div>
   );
 }

@@ -204,3 +204,28 @@
 
   user-select: none;
 }
+
+.choose-file-btn {
+  display: inline-block;
+  padding: 10px 18px;
+
+  background: #002f34;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  border-radius: 4px;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+.choose-file-btn:hover {
+  background: #014d55;
+}
+
+.choose-file-btn:active {
+  transform: scale(0.98);
+}
