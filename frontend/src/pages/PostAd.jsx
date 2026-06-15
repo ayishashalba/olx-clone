@@ -20,7 +20,7 @@ if (!user || (user.role !== "seller" && user.role !== "admin")) {
   });
 
   const [image, setImage] = useState(null);
-
+const [preview, setPreview] = useState("");
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -75,9 +75,19 @@ if (!user || (user.role !== "seller" && user.role !== "admin")) {
         <input name="location" placeholder="Location" onChange={handleChange} />
 
         <input
-          type="file"
-          onChange={(e) => setImage(e.target.files[0])}
-        />
+  id="imageUpload"
+  type="file"
+  style={{ display: "none" }}
+  onChange={(e) => {
+    const file = e.target.files[0];
+
+    setImage(file);
+
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    }
+  }}
+/>
 
         <button type="submit">Post Ad</button>
       </form>
