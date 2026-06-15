@@ -126,10 +126,8 @@ const [currentImage, setCurrentImage] = useState("");
   onChange={(e) => setImage(e.target.files[0])}
 />
 
-<label htmlFor="imageUpload">
-  <button type="button">
-    Choose File
-  </button>
+<label htmlFor="imageUpload" className="upload-btn">
+  Choose File
 </label>
 
 <button type="submit">Update Product</button>
