@@ -37,7 +37,7 @@ router.post("/register", async (req, res) => {
 
     console.log("STEP 4");
 
-    // await sendEmail(email, otp);
+    await sendEmail(email, otp);
 
     console.log("STEP 5");
 

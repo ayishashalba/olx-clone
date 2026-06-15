@@ -10,7 +10,8 @@ const sendEmail = async (email, otp) => {
     },
   });
 
-  await transporter.sendMail({
+  try {
+  const info = await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: email,
     subject: "OLX Clone OTP Verification",
@@ -20,6 +21,11 @@ const sendEmail = async (email, otp) => {
       <p>This OTP expires in 5 minutes.</p>
     `,
   });
+
+  console.log("EMAIL SENT:", info.response);
+} catch (err) {
+  console.error("EMAIL ERROR:", err);
+}
 };
 
 module.exports = sendEmail;
