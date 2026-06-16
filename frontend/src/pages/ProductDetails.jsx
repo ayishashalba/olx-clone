@@ -26,7 +26,6 @@ function ProductDetails() {
   }
   
 const words = product.description.trim().split(/\s+/);
-console.log("Words:", words.length);
   return (
     <div className="details-page">
       <div className="details-card">
