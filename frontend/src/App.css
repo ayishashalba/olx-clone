@@ -229,3 +229,8 @@
 .choose-file-btn:active {
   transform: scale(0.98);
 }
+.read-more {
+  color: #3a77ff;
+  font-weight: 600;
+  cursor: pointer;
+}

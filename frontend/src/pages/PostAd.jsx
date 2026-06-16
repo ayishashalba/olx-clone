@@ -72,10 +72,10 @@ function PostAd() {
     return;
   }
 
-  if (price < 0) {
-    toast.error("Price cannot be negative");
-    return;
-  }
+  if (price <= 0) {
+  toast.error("Price cannot be 0 or negative");
+  return;
+}
 
   // Image validation
   if (!image) {
@@ -89,13 +89,6 @@ function PostAd() {
   }
 
   setLoading(true);
-  
-    if (!image) {
-      toast.error("Please upload an image");
-      return;
-    }
-
-    setLoading(true);
 
     const formData = new FormData();
     formData.append("title", form.title);

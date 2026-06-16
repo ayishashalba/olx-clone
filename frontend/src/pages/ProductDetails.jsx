@@ -6,6 +6,7 @@ function ProductDetails() {
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
+const [showFullDescription, setShowFullDescription] = useState(false);
 
   const fetchProduct = async () => {
     try {
@@ -35,7 +36,28 @@ function ProductDetails() {
         <div className="details-info">
           <h1>₹ {product.price}</h1>
           <h2>{product.title}</h2>
-          <p>{product.description}</p>
+          <p>
+  {product.description.length > 150
+    ? (
+        <>
+          {showFullDescription
+            ? product.description
+            : `${product.description.slice(0, 150)}...`}
+        </>
+      )
+    : product.description}
+</p>
+
+{product.description.length > 150 && (
+  <span
+    onClick={() =>
+      setShowFullDescription(!showFullDescription)
+    }
+    className="read-more"
+  >
+    {showFullDescription ? "Show less" : "Read more"}
+  </span>
+)}
 
           <h3>Category: {product.category}</h3>
           <h3>Location: {product.location}</h3>
