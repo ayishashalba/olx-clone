@@ -24,6 +24,7 @@ function ProductDetails() {
   if (!product) {
     return <h1>Loading...</h1>;
   }
+  return <h1>TEST PAGE</h1>;
 const words = product.description.trim().split(/\s+/);
 console.log("Words:", words.length);
   return (
