@@ -18,7 +18,47 @@ function Login() {
       [e.target.name]: e.target.value,
     });
   };
+const handleLogin = async (e) => {
+  e.preventDefault();
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!form.email.trim()) {
+    toast.error("Email is required");
+    return;
+  }
+
+  if (!emailRegex.test(form.email)) {
+    toast.error("Enter a valid email address");
+    return;
+  }
+
+  if (!form.password.trim()) {
+    toast.error("Password is required");
+    return;
+  }
+
+  try {
+    const res = await axios.post(
+      "https://olx-clone-zg79.onrender.com/api/auth/login",
+      form
+    );
+
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
+    toast.success("Login successful");
+
+    setForm({
+      email: "",
+      password: "",
+    });
+
+    navigate("/");
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Login failed");
+  }
+};
   const handleLogin = async (e) => {
     e.preventDefault();
 
