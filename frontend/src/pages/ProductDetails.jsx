@@ -38,17 +38,10 @@ const words = product.description.trim().split(/\s+/);
           <h2>{product.title}</h2>
           <h4>Words Count: {words.length}</h4>
           <p>
-  {words.length > 10
-    ? (
-        <p>
   {showFullDescription
     ? product.description
     : words.slice(0, 10).join(" ") +
       (words.length > 10 ? "..." : "")}
-</p>
-
-      )
-    : product.description}
 </p>
 
 {words.length > 10 && (
