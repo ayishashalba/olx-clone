@@ -29,8 +29,7 @@ function App() {
 
         <Route path="/post-ad" element={<PostAd />} />
 
-        {/* <Route path="/product/:id" element={<ProductDetails />} /> */}
-        <Route path="/product/:id" element={<h1>PRODUCT TEST</h1>} />
+        <Route path="/product/:id" element={<ProductDetails />} />
 
         <Route path="/admin" element={<Admin />} />
 
