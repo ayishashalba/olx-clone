@@ -47,6 +47,49 @@ function PostAd() {
   const handlePostAd = async (e) => {
     e.preventDefault();
 
+    // Title validation
+  if (!form.title.trim()) {
+    toast.error("Product title is required");
+    return;
+  }
+
+  // Category validation
+  if (!form.category.trim()) {
+    toast.error("Category is required");
+    return;
+  }
+
+  // Price validation
+  if (!form.price) {
+    toast.error("Price is required");
+    return;
+  }
+
+  const price = parseFloat(form.price);
+
+  if (isNaN(price)) {
+    toast.error("Price must be a number");
+    return;
+  }
+
+  if (price < 0) {
+    toast.error("Price cannot be negative");
+    return;
+  }
+
+  // Image validation
+  if (!image) {
+    toast.error("Please upload an image");
+    return;
+  }
+
+  if (!image.type.startsWith("image/")) {
+    toast.error("Please upload a valid image file");
+    return;
+  }
+
+  setLoading(true);
+  
     if (!image) {
       toast.error("Please upload an image");
       return;
