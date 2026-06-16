@@ -9,6 +9,7 @@ function EditProduct() {
   const token = localStorage.getItem("token");
 const [image, setImage] = useState(null);
 const [currentImage, setCurrentImage] = useState("");
+const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -49,6 +50,44 @@ const [currentImage, setCurrentImage] = useState("");
   const updateProduct = async (e) => {
   e.preventDefault();
 
+  // ✅ TITLE
+  if (!form.title.trim()) {
+    toast.error("Product title is required");
+    return;
+  }
+
+  // ✅ CATEGORY
+  if (!form.category.trim()) {
+    toast.error("Category is required");
+    return;
+  }
+
+  // ✅ PRICE
+  if (!form.price) {
+    toast.error("Price is required");
+    return;
+  }
+
+  const price = parseFloat(form.price);
+
+  if (isNaN(price)) {
+    toast.error("Price must be a number");
+    return;
+  }
+
+  if (price <= 0) {
+    toast.error("Price cannot be 0 or negative");
+    return;
+  }
+
+  // optional: description check
+  if (!form.description.trim()) {
+    toast.error("Description is required");
+    return;
+  }
+
+  setLoading(true);
+
   try {
     const formData = new FormData();
 
@@ -58,8 +97,13 @@ const [currentImage, setCurrentImage] = useState("");
     formData.append("category", form.category);
     formData.append("location", form.location);
 
-    // send image only if user selected new image
     if (image) {
+      if (!image.type.startsWith("image/")) {
+        toast.error("Please upload a valid image file");
+        setLoading(false);
+        return;
+      }
+
       formData.append("image", image);
     }
 
@@ -79,6 +123,8 @@ const [currentImage, setCurrentImage] = useState("");
 
   } catch (error) {
     toast.error(error.response?.data?.message || "Update failed");
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -130,7 +176,9 @@ const [currentImage, setCurrentImage] = useState("");
   Choose File
 </label>
 
-<button type="submit">Update Products</button>
+<button type="submit" disabled={loading}>
+  {loading ? "Updating..." : "Update Product"}
+</button>
       </form>
     </div>
   );
