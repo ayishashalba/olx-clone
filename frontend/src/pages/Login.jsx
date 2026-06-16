@@ -59,25 +59,6 @@ const handleLogin = async (e) => {
     toast.error(error.response?.data?.message || "Login failed");
   }
 };
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await axios.post("https://olx-clone-zg79.onrender.com/api/auth/login", form);
-
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-
-      toast.success("Login successful");
-      setForm({
-  email: "",
-  password: "",
-});
-      navigate("/");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed");
-    }
-  };
 
   return (
     <div className="form-container">
