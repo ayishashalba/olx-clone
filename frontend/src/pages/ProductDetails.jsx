@@ -24,7 +24,7 @@ function ProductDetails() {
   if (!product) {
     return <h1>Loading...</h1>;
   }
-
+const words = product.description.split(" ");
   return (
     <div className="details-page">
       <div className="details-card">
@@ -37,18 +37,18 @@ function ProductDetails() {
           <h1>₹ {product.price}</h1>
           <h2>{product.title}</h2>
           <p>
-  {product.description.length > 10
+  {words.length > 10
     ? (
         <>
           {showFullDescription
             ? product.description
-            : `${product.description.slice(0, 10)}...`}
+            : `${words.slice(0, 10).join(" ")}...`}
         </>
       )
     : product.description}
 </p>
 
-{product.description.length > 10 && (
+{words.length > 10 && (
   <span
     onClick={() =>
       setShowFullDescription(!showFullDescription)
