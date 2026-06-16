@@ -13,16 +13,40 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   console.log("REGISTER HIT");
   try {
-    console.log("STEP 1");
-
     const { name, email, password, role } = req.body;
+    const nameRegex = /^([A-Z][a-zA-Z]{1,})(\s[A-Z][a-zA-Z]{1,})*$/;
 
-    console.log("STEP 2");
+if (!nameRegex.test(name.trim())) {
+  return res.status(400).json({
+    message:
+      "Name must start with capital letters and each word must contain at least 2 letters",
+  });
+}
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if (!emailRegex.test(email)) {
+  return res.status(400).json({
+    message: "Invalid email address",
+  });
+}
+
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+
+if (!passwordRegex.test(password)) {
+  return res.status(400).json({
+    message:
+      "Password must be at least 6 characters and contain at least one letter and one number",
+  });
+}
+const existingUser = await User.findOne({ email });
+
+if (existingUser) {
+  return res.status(400).json({
+    message: "Email already registered",
+  });
+}
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    console.log("STEP 3");
-
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     const user = await User.create({
@@ -34,13 +58,7 @@ router.post("/register", async (req, res) => {
       otpExpires: Date.now() + 5 * 60 * 1000,
       isVerified: false,
     });
-
-    console.log("STEP 4");
-
     await sendEmail(email, otp);
-
-    console.log("STEP 5");
-
     res.status(201).json({
   message: "OTP created",
   otp

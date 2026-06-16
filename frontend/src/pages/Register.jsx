@@ -19,17 +19,51 @@ function Register() {
       [e.target.name]: e.target.value,
     });
   };
+  const validateName = (name) => {
+  const nameRegex = /^([A-Z][a-zA-Z]{1,})(\s[A-Z][a-zA-Z]{1,})*$/;
+  return nameRegex.test(name.trim());
+};
+
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const validatePassword = (password) => {
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+  return passwordRegex.test(password);
+};
 
   const handleRegister = async (e) => {
   e.preventDefault();
 
+  if (!validateName(form.name)) {
+    toast.error(
+      "Name must start with capital letters and each word must contain at least 2 letters"
+    );
+    return;
+  }
+
+  if (!validateEmail(form.email)) {
+    toast.error("Enter a valid email address");
+    return;
+  }
+
+  if (!validatePassword(form.password)) {
+    toast.error(
+      "Password must be at least 6 characters and contain a letter and a number"
+    );
+    return;
+  }
+
   try {
     const res = await axios.post(
-    "http://localhost:5000/api/auth/register",
-    form
-  );
+      "http://localhost:5000/api/auth/register",
+      form
+    );
 
-  console.log("REGISTER RESPONSE:", res.data);
+    console.log("REGISTER RESPONSE:", res.data);
+
     toast.success("OTP sent to email");
 
     navigate("/verify-otp", {
