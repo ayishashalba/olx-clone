@@ -207,23 +207,27 @@
 
 .choose-file-btn {
   display: inline-block;
-  padding: 10px 18px;
+  padding: 12px 20px;
 
   background: #002f34;
-  color: #ffffff;
+  color: #fff;
 
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
 
-  border-radius: 4px;
-  cursor: pointer;
+  border: none;
+  border-radius: 6px;
 
-  transition: 0.2s ease;
+  cursor: pointer;
   text-align: center;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
 }
 
 .choose-file-btn:hover {
   background: #014d55;
+  transform: translateY(-1px);
 }
 
 .choose-file-btn:active {
