@@ -165,7 +165,7 @@ function PostAd() {
 />
 
 <label htmlFor="imageUpload" className="choose-file-btn">
-  📷 Choose Product Image
+  📷 Choose Image
 </label>
 
 {image && (
