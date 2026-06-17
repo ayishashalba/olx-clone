@@ -166,12 +166,14 @@ function PostAd() {
 />
 
 <label htmlFor="imageUpload" className="choose-file-btn">
-  Choose File
+  📷 Choose Image
 </label>
 
-        <br />
-        <br />
-
+{image && (
+  <p className="file-name">
+    Selected: {image.name}
+  </p>
+)}
         <button type="submit" disabled={loading}>
           {loading ? "Posting..." : "Post Ad"}
         </button>

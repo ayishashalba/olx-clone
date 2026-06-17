@@ -166,21 +166,15 @@ const [loading, setLoading] = useState(false);
   />
 )}
 <input
-  type="file"
   id="imageUpload"
-  hidden
-  onChange={handleImageChange}
+  type="file"
+  style={{ display: "none" }}
+  onChange={(e) => setImage(e.target.files[0])}
 />
 
-<label htmlFor="imageUpload" className="choose-file-btn">
-  📷 Choose Image
+<label htmlFor="imageUpload" className="upload-btn">
+  Choose File
 </label>
-
-{image && (
-  <p className="file-name">
-    Selected: {image.name}
-  </p>
-)}
 
 <button type="submit" disabled={loading}>
   {loading ? "Updating..." : "Update Product"}
