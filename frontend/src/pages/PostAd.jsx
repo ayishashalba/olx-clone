@@ -157,7 +157,6 @@ function PostAd() {
           />
         )}
 
-        {/* FILE INPUT */}
         <input
   type="file"
   id="imageUpload"
@@ -166,7 +165,7 @@ function PostAd() {
 />
 
 <label htmlFor="imageUpload" className="choose-file-btn">
-  📷 Choose Image
+  📷 Choose Product Image
 </label>
 
 {image && (
