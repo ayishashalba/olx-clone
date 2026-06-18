@@ -37,7 +37,6 @@ const words = product.description.trim().split(/\s+/);
         <div className="details-info">
           <h1>₹ {product.price}</h1>
           <h2>{product.title}</h2>
-          <h4>Words Count: {words.length}</h4>
           <p>
   {showFullDescription
     ? product.description
