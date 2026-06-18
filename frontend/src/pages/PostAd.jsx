@@ -168,11 +168,6 @@ function PostAd() {
   📷 Choose Image
 </label>
 
-{image && (
-  <p className="file-name">
-    Selected: {image.name}
-  </p>
-)}
         <button type="submit" disabled={loading}>
           {loading ? "Posting..." : "Post Ad"}
         </button>
