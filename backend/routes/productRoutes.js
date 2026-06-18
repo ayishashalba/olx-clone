@@ -19,15 +19,15 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
 }
     const { title, description, price, category, location } = req.body;
 
-   const existingProduct = await Product.findOne({
-  title: { $regex: `^${title.trim()}$`, $options: "i" },
-  seller: req.user._id,
-});
-    if(existingProduct){
-      return res.json({
-         message:"already added",
-      });
-    }
+//    const existingProduct = await Product.findOne({
+//   title: { $regex: `^${title.trim()}$`, $options: "i" },
+//   seller: req.user._id,
+// });
+//     if(existingProduct){
+//       return res.json({
+//          message:"already added",
+//       });
+//     }
 
     const product = await Product.create({
       title,
@@ -49,7 +49,6 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
 });
 
 // Get All Products
-// Get All Products with Search, Filter, Sort
 router.get("/", async (req, res) => {
   try {
     const { search, category, location, sort } = req.query;

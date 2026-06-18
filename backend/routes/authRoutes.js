@@ -1,38 +1,30 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
 const User = require("../models/User");
 const protect = require("../middleware/authMiddleware");
 const adminOnly = require("../middleware/adminMiddleware");
 const sendEmail = require("../utils/sendEmail");
-
 const router = express.Router();
-
 // Register
 router.post("/register", async (req, res) => {
   console.log("REGISTER HIT");
   try {
     const { name, email, password, role } = req.body;
     const nameRegex = /^([A-Z][a-zA-Z]{1,})(\s[A-Z][a-zA-Z]{1,})*$/;
-
 if (!nameRegex.test(name.trim())) {
   return res.status(400).json({
     message:
       "Name must start with capital letters and each word must contain at least 2 letters",
   });
 }
-
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 if (!emailRegex.test(email)) {
   return res.status(400).json({
     message: "Invalid email address",
   });
 }
-
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
-
 if (!passwordRegex.test(password)) {
   return res.status(400).json({
     message:
@@ -40,7 +32,6 @@ if (!passwordRegex.test(password)) {
   });
 }
 const existingUser = await User.findOne({ email });
-
 if (existingUser) {
   return res.status(400).json({
     message: "Email already registered",
@@ -48,7 +39,6 @@ if (existingUser) {
 }
     const hashedPassword = await bcrypt.hash(password, 10);
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
     const user = await User.create({
       name,
       email,
@@ -63,7 +53,6 @@ if (existingUser) {
   message: "OTP created",
   otp
 });
-
   } catch (error) {
     console.log("REGISTER ERROR:", error);
     res.status(500).json({
@@ -72,42 +61,35 @@ if (existingUser) {
   }
 });
 
+//verify-otp
 router.post("/verify-otp", async (req, res) => {
   try {
     const { email, otp } = req.body;
-
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-
     if (user.otp !== otp) {
       return res.status(400).json({
         message: "Invalid OTP",
       });
     }
-
     if (user.otpExpires < Date.now()) {
       return res.status(400).json({
         message: "OTP expired",
       });
     }
-
     user.isVerified = true;
     user.otp = null;
     user.otpExpires = null;
-
     await user.save();
-
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
-
     res.json({
       message: "Email verified successfully",
       token,
@@ -124,33 +106,26 @@ router.post("/verify-otp", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(400).json({
         message: "Invalid email or password",
       });
     }
-
     if (user.isBlocked) {
   return res.status(403).json({
     message: "Your account has been blocked by admin",
   });
 }
-
 const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
       return res.status(400).json({
         message: "Invalid email or password",
       });
     }
-
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-
     res.json({
       message: "Login successful",
       token,
@@ -167,7 +142,6 @@ const isMatch = await bcrypt.compare(password, user.password);
 router.get("/users", protect, adminOnly, async (req, res) => {
   try {
     const users = await User.find().select("-password").sort({ createdAt: -1 });
-
     res.json(users);
   } catch (error) {
     res.status(500).json({
@@ -180,23 +154,18 @@ router.get("/users", protect, adminOnly, async (req, res) => {
 router.patch("/users/:id/block", protect, adminOnly, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-
     if (user.role === "admin") {
       return res.status(400).json({
         message: "Admin user cannot be blocked",
       });
     }
-
     user.isBlocked = !user.isBlocked;
-
     await user.save();
-
     res.json({
       message: user.isBlocked ? "User blocked" : "User unblocked",
       user,
@@ -208,23 +177,19 @@ router.patch("/users/:id/block", protect, adminOnly, async (req, res) => {
   }
 });
 
+//password reset
 router.put("/forgot-password", async (req, res) => {
   try {
     const { email, newPassword } = req.body;
-
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
     user.password = hashedPassword;
     await user.save();
-
     res.json({
       message: "Password changed successfully",
     });
@@ -235,27 +200,21 @@ router.put("/forgot-password", async (req, res) => {
   }
 });
 
+//otp-reset
 router.post("/resend-otp", async (req, res) => {
   try {
     const { email } = req.body;
-
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
     user.otp = otp;
     user.otpExpires = Date.now() + 5 * 60 * 1000;
-
     await user.save();
-
     await sendEmail(email, otp);
-
     res.json({
       message: "OTP resent successfully",
     });
