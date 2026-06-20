@@ -54,7 +54,7 @@ const handleLogin = async (e) => {
       password: "",
     });
 
-    navigate("/",{replace:true});
+    navigate("/");
   } catch (error) {
     toast.error(error.response?.data?.message || "Login failed");
   }
