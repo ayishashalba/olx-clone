@@ -19,15 +19,15 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
 }
     const { title, description, price, category, location } = req.body;
 
-//    const existingProduct = await Product.findOne({
-//   title: { $regex: `^${title.trim()}$`, $options: "i" },
-//   seller: req.user._id,
+// const existingProduct=await Product.find({
+//   title:title.trim(),
+//   seller:req.user._id
 // });
-//     if(existingProduct){
-//       return res.json({
-//          message:"already added",
-//       });
-//     }
+// if(existingProduct){
+//   return res.json({
+//     message:"already exists",
+//   });
+// }
 
     const product = await Product.create({
       title,
