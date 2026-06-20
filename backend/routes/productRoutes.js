@@ -18,16 +18,15 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
   });
 }
     const { title, description, price, category, location } = req.body;
-// Check if same seller already posted this product
 const existingProduct = await Product.findOne({
-  _id: { $ne: req.params.id },
-  title: { $regex: `^${title.trim()}$`, $options: "i" },
+  _id: { $ne: req.params.id }, // exclude current product
+  title: { $regex: `^${req.body.title.trim()}$`, $options: "i" },
   seller: req.user._id,
 });
 
 if (existingProduct) {
   return res.status(400).json({
-    message: "You already posted this product",
+    message: "Product already exists",
   });
 }
     const product = await Product.create({
