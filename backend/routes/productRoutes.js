@@ -21,7 +21,7 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
 
     const exist=await Product.find({
       title:title.trim(),
-      seller:red.user._id
+      seller:req.user._id
     });
     if(exist){
       return res.json({
