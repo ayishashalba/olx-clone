@@ -20,6 +20,7 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
     const { title, description, price, category, location } = req.body;
 // Check if same seller already posted this product
 const existingProduct = await Product.findOne({
+  _id: { $ne: req.params.id },
   title: { $regex: `^${title.trim()}$`, $options: "i" },
   seller: req.user._id,
 });
