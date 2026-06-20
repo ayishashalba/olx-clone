@@ -19,6 +19,15 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
 }
     const { title, description, price, category, location } = req.body;
 
+    const exist=await Product.find({
+      title:title.trim(),
+      seller:red.user._id
+    });
+    if(exist){
+      return res.json({
+        message:"already exist"
+      });
+    }
     const product = await Product.create({
       title,
       description,
