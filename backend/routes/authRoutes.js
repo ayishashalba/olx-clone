@@ -6,6 +6,7 @@ const protect = require("../middleware/authMiddleware");
 const adminOnly = require("../middleware/adminMiddleware");
 const sendEmail = require("../utils/sendEmail");
 const router = express.Router();
+
 // Register
 router.post("/register", async (req, res) => {
   console.log("REGISTER HIT");
