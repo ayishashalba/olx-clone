@@ -19,8 +19,7 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
 }
     const { title, description, price, category, location } = req.body;
 const existingProduct = await Product.findOne({
-  _id: { $ne: req.params.id }, // exclude current product
-  title: { $regex: `^${req.body.title.trim()}$`, $options: "i" },
+  title: { $regex: `^${title.trim()}$`, $options: "i" },
   seller: req.user._id,
 });
 
@@ -172,7 +171,17 @@ router.delete("/:id", protect, async (req, res) => {
 router.put("/:id", protect, upload.single("image"), async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
+const existingProduct = await Product.findOne({
+  _id: { $ne: req.params.id },
+  title: { $regex: `^${req.body.title.trim()}$`, $options: "i" },
+  seller: req.user._id,
+});
 
+if (existingProduct) {
+  return res.status(400).json({
+    message: "Product with this title already exists",
+  });
+}
     if (!product) {
       return res.status(404).json({
         message: "Product not found",
