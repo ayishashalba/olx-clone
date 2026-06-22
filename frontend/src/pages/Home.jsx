@@ -27,7 +27,7 @@ function Home() {
   const apiCategory = category === "Others" ? "" : category;
 
   const res = await axios.get(
-    `https://olx-clone-zg79.onrender.com/api/products?category=${apiCategory}&search=${searchQuery}&sort=${selectedSort}`
+    `https://olx-clone-zg79.onfrender.com/api/products?category=${apiCategory}&search=${searchQuery}&sort=${selectedSort}`
   );
 
   let data = res.data;
@@ -108,7 +108,9 @@ function Home() {
       </div>
 
       <div className="product-grid">
-        {products.map((product) => (
+        {products.length === 0 ? (
+  <h3>No products found</h3>
+) : (products.map((product) => (
           <Link
             to={`/product/${product._id}`}
             className="product-card"
@@ -137,7 +139,8 @@ function Home() {
             <p>{product.title}</p>
             <small>{product.location}</small>
           </Link>
-        ))}
+        ))
+      )}
       </div>
     </div>
   );
