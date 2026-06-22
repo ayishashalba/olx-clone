@@ -109,7 +109,9 @@ console.log("Products:", data);
 
       <div className="product-grid">
         {products.length === 0 ? (
-  <h3>No products found</h3>
+  <div style={{ textAlign: "center", fontSize: "24px" }}>
+    No products found
+  </div>
 ) : (products.map((product) => (
           <Link
             to={`/product/${product._id}`}
