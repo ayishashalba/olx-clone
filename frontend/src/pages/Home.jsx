@@ -31,7 +31,7 @@ function Home() {
   );
 
   let data = res.data;
-
+console.log("Products:", data);
   if (category === "Others") {
     const mainCategories = [
       "Cars",
