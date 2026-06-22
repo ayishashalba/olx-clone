@@ -27,7 +27,7 @@ function Home() {
   const apiCategory = category === "Others" ? "" : category;
 
   const res = await axios.get(
-    `https://olx-clone-zg79.onfrender.com/api/products?category=${apiCategory}&search=${searchQuery}&sort=${selectedSort}`
+    `https://olx-clone-zg79.onrender.com/api/products?category=${apiCategory}&search=${searchQuery}&sort=${selectedSort}`
   );
 
   let data = res.data;
