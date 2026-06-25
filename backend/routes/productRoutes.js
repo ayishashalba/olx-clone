@@ -171,16 +171,6 @@ router.put("/:id", protect, upload.single("image"), async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
 
-    const exist=await Product.find({
-      _id:{$ne:req.params.id},
-      title:title.trim(),
-      selller:req.user._id
-    });
-    if(exist){
-      return res.json({
-        message:"product already there"
-      });
-    }
 // const existingProduct = await Product.findOne({
 //   _id: { $ne: req.params.id },
 //   title: { $regex: `${req.body.title.trim()}$`, $options: "i" },
