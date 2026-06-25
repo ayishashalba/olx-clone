@@ -18,7 +18,7 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
   });
 }
     const { title, description, price, category, location } = req.body;
-const existingProduct = await Product.findOne({
+const existingProduct = await Product.find({
   title: { $regex: `^${title.trim()}$`, $options: "i" },
   seller: req.user._id,
 });
