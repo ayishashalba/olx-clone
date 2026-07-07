@@ -197,6 +197,11 @@ if (existingProduct) {
         message: "Not allowed to update this product",
       });
     }
+    if (product.status === "sold") {
+  return res.status(400).json({
+    message: "Sold product cannot be edited",
+  });
+}
 
     product.title = req.body.title || product.title;
     product.description = req.body.description || product.description;
