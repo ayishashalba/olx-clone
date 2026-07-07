@@ -169,9 +169,7 @@ router.delete("/:id", protect, async (req, res) => {
 // Update Product
 router.put("/:id", protect, upload.single("image"), async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
-
-const existingProduct = await Product.findOne({
+    const existingProduct = await Product.findOne({
   _id: { $ne: req.params.id },
   title: { $regex: `${req.body.title.trim()}$`, $options: "i" },
   seller: req.user._id,
@@ -182,6 +180,9 @@ if (existingProduct) {
     message: "Product with this title already exists",
   });
 }
+    const product = await Product.findById(req.params.id);
+
+
     if (!product) {
       return res.status(404).json({
         message: "Product not found",
