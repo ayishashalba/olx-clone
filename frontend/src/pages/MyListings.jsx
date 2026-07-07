@@ -94,9 +94,16 @@ function MyListings() {
                 🗑️
               </button>
 
-              <Link to={`/edit-product/${product._id}`}>
-                <button className="icon-btn">✏️</button>
-              </Link>
+              <Link
+  to={product.status === "sold" ? "#" : `/edit-product/${product._id}`}
+>
+  <button
+    className="icon-btn"
+    disabled={product.status === "sold"}
+  >
+    ✏️
+  </button>
+</Link>
 
               <button
                 className="icon-btn"
