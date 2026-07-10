@@ -202,7 +202,7 @@ if (existingProduct) {
     product.description = req.body.description || product.description;
     product.price = req.body.price || product.price;
     product.category = req.body.category || product.category;
-    product.location = req.body.location || product.location;
+    product.location = req.body.location || product.locations;
 
     if (req.file) {
       product.image = req.file.filename;
